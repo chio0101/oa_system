@@ -1,5 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm # 新增
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 def register(request):
 	if request.method == 'POST':
@@ -15,11 +16,8 @@ def register(request):
 		context = {'form': form}
 		return render(request, 'registration/register.html', context)
 
+@login_required(login_url="login")
 def index(request):
-	if request.user.is_authenticated:
-		username = request.user.username
-	else:
-		return redirect("/accounts/login")
-
+	username = request.user.username
 	context = { "username": username}
 	return render(request, "index.html", context)

@@ -1,4 +1,4 @@
-"""oa_system URL Configuration
+"""hr_system URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -14,13 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from django.views.generic.base import TemplateView
 from . import views
 
+app_name = 'hr'
 urlpatterns = [
-    path('', views.index, name="index"),
-    path('admin/', admin.site.urls),
-    path('hr/', include('hr_system.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('register/', views.register, name="register"),
+    path('', TemplateView.as_view(template_name='hrs/hr_index.html'), name="hr_index"),
+    path('clockin', views.hr_clockin, name="hr_clockin"),
+    path('info', views.hr_info, name="hr_info"),
 ]

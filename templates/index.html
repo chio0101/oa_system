@@ -4,5 +4,11 @@ Home Page
 {% endblock title %}
 {% block content %}
     <p> Hello, {{ username }} </p>
-    <a href="{% url 'login' %}">Login Page</a>
+    <a href="{% url 'hr:hr_index' %}">HR System</a>
+    </br>
+    </br>
+    <a href="{% url 'logout' %}">
+        <button>Logout</button>
+    </a>
+    </br>
 {% endblock content %}
