@@ -22,5 +22,5 @@ app_name = 'hr'
 urlpatterns = [
     path('', TemplateView.as_view(template_name='hrs/hr_index.html'), name="hr_index"),
     path('clockin', views.hr_clockin, name="hr_clockin"),
-    path('info', views.hr_info, name="hr_info"),
+    path('profile', views.hr_profile, name="hr_profile"),
 ]

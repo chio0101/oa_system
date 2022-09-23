@@ -3,22 +3,26 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Employee
 from .forms import EmployeeForm
+from django.contrib import messages
 
 # Create your views here.
 
 
 @login_required(login_url="login")
 def hr_clockin(request):
-    login_name = request.user.username
-    # employee = get_object_or_404(Employee, login_name=login_name)
-    employee = ''
+    username = request.user.username
+    employee = Employee.objects.filter(username=username).values()
+    if list(employee):
+        employee_dict = list(employee)[0]
+    # else:
+
     context = {
         'employee': employee
     }
     return render(request, "hrs/hr_clockin.html", context)
 
 @login_required(login_url="login")
-def hr_info(request):
+def hr_profile(request):
     username = request.user.username
     employee = Employee.objects.filter(username=username).values()
     employee_dict = list(employee)[0] if list(employee) else {}
@@ -30,10 +34,12 @@ def hr_info(request):
             data = form.cleaned_data
             data['username'] = User.objects.get(username=username)
             employee = Employee.objects.update_or_create(username=username, defaults=data)
-            return redirect('/')
+
+            messages.success(request, "Successfully edit profile!")
+            return redirect('/hr')
         else:
-            return render(request, "hrs/hr_info.html", {'form':form})
+            return render(request, "hrs/hr_profile.html", {'form':form})
     else:
         form = EmployeeForm(initial=employee_dict)
         context = {'form': form}
-        return render(request, "hrs/hr_info.html", context)
+        return render(request, "hrs/hr_profile.html", context)

@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}
-Personal Information
+Profile
 {% endblock title %}
 {% block content %}
-    <h1>Personal Information</h1>
+    <h1>Profile</h1>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
