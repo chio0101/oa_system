@@ -4,6 +4,9 @@ Profile
 {% endblock title %}
 {% block content %}
     <h1>Profile</h1>
+    <a href="{% url 'hr:hr_index' %}"><button>Back</button></a>
+    </br>
+    </br>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -11,4 +14,6 @@ Profile
         {{ field.errors }}
         {% endfor %}
     <button type="submit">送出</button>
+
+    
 {% endblock content %}

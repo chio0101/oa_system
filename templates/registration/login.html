@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block title %}
-Chio's OA System
+Login Page
 {% endblock title %}
 {% block content %}
+<h1>Login</h1>
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 <table>

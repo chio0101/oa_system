@@ -1,7 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}
-HR Clock In Page
+Clock In Page
 {% endblock title %}
 {% block content %}
-    <a href="{% url 'hr:hr_clockin' %}">Clock In</a></br>
+    <h1>Clock In</h1>
+    <div id="date"></div>
+    <div id="clock"></div>
+    <form method="POST">{% csrf_token %}<button>Clock In</button></form>
+    <p>{{ clock_in_msg }}</p>
+    <h3>Record</h3>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Morning In</th>
+            <th>Morning Out</th>
+            <th>Afteroon In</th>
+            <th>Afteroon Out</th>
+        </tr>
+        {% for record in clock_in_record %}
+            <tr>
+                <td>{{ record.date }}</td>
+                <td>{{ record.morning_enter_time }}</td>
+                <td>{{ record.morning_leave_time }}</td>
+                <td>{{ record.afteroon_enter_time }}</td>
+                <td>{{ record.afteroon_leave_time }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br/>
+    <br/>
+    <a href="{% url 'hr:hr_index' %}"><button>Back</button></a>
+    
+    <!--JavaScript-->
+    <script>
+        function startTime() {
+            const today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let day = today.getDate();
+            let hour = today.getHours();
+            let minute = today.getMinutes();
+            let second = today.getSeconds();
+            minute = checkTime(minute);
+            second = checkTime(second);
+            document.getElementById('date').innerHTML = "Date: " + year + "/" + month + "/" + day;
+            document.getElementById('clock').innerHTML =  "Current time: " + hour + ":" + minute + ":" + second;
+            setTimeout(startTime, 1000);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+
+        startTime();
+    </script>
+    
 {% endblock content %}
